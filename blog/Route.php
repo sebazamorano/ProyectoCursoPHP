@@ -44,6 +44,11 @@ class Route
      * Executa el llamado a la accion del Controlador
      * que se encuentra en la ruta
      */
+    /**
+     * @param $uri
+     * @param $method
+     * @throws Exception
+     */
     public function execute($uri, $method)
     {
         if (array_key_exists($uri, $this->routes[$method])) {
@@ -55,7 +60,7 @@ class Route
     }
 
     /*
-     * Creacion del objeto Controllerf
+     * Creacion del objeto Controller
      */
     protected function callAction($controller, $action)
     {

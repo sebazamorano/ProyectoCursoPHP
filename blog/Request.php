@@ -10,6 +10,7 @@ class Request
 
     public static function method ()
     {
+        //GET - POST
         return $_SERVER['REQUEST_METHOD'];
     }
 }

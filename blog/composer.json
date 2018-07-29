@@ -9,7 +9,9 @@
             "email": "sebazamoranoj@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "twig/twig": "^2.0"
+    },
     "autoload": {
         "psr-4": {
             "Blog\\": "./"

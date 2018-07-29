@@ -1,5 +1,5 @@
 <?php
-$route->get('/hola', 'HomeController@hola');
-$route->get('/chao', 'HomeController@chao');
-$route->get('/saludo', 'HomeController@saludo');
-$route->post('/nuevo-usuario', 'UserController@store');
+$route->get('/', 'HomeController@home');
+$route->get('/usuarios', 'HomeController@usuarios');
+
+$route->post('/usuarios', 'HomeController@store');
