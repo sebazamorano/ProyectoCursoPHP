@@ -22,8 +22,7 @@ class HomeController extends Controller
     public function usuarios ()
     {
         $usuario = new Usuario();
-
-        $usuarios = $usuario->allBy('nombre', 'Pepito');
+        $usuarios = $usuario->all('nombre', 'Pepito');
 
         $this->view('usuarios', compact('usuarios'));
     }
@@ -35,5 +34,7 @@ class HomeController extends Controller
         $usuario->email = $_POST['email'];
         $usuario->password = $_POST['password'];
         $usuario->create();
+
+        return header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
 }

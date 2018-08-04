@@ -5,12 +5,13 @@ use PDO;
 
 class Connection
 {
-    protected $pdo;
-
     public static function run()
     {
         return new PDO('mysql:host=127.0.0.1;dbname=blog',
             'root',
-            'sebazamorano');
+            'sebazamorano',
+            [
+                PDO::ATTR_ERRMODE =>  PDO::ERRMODE_EXCEPTION
+            ]);
     }
 }

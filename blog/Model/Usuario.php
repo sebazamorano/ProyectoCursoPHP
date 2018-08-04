@@ -5,6 +5,11 @@ namespace Blog\Model;
 class Usuario extends Model
 {
     protected $table = 'usuarios';
+    protected $columns = [
+        'nombre',
+        'email',
+        'password'
+    ];
     public $nombre;
     public $email;
     public $password;
@@ -22,14 +27,14 @@ class Usuario extends Model
 
     public function create()
     {
-        $this->pdo->prepare(
-            "INSERT INTO usuarios VALUES(:nombre, :email, :password)"
-        );
+        $data = [
+            $this->nombre,
+            $this->email,
+            password_hash($this->password, PASSWORD_BCRYPT)
+        ];
 
-        return $this->query->execute([
-            'nombre' => $this->nombre,
-            'email' => $this->email,
-            'password' => md5($this->password)
-        ]);
+        $this->id = $this->query->insertData($data, $this->columns);
+
+        return $this;
     }
 }

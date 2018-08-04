@@ -31,8 +31,25 @@ class QueryBuilder
         return $query->fetchAll(PDO::FETCH_CLASS);
     }
 
-    public function create($table, $datos = [])
+    public function insertData($data, $columns)
     {
-        $sql = "INSERT INTO $table VALUE ()";
+        $values = [];
+
+        foreach ($data as $d){
+            $values[] = '?';
+        }
+
+        $values = implode(',', $values);
+
+        $columns = implode(',', $columns);
+
+        $query = $this->pdo->prepare(
+            "INSERT INTO usuarios ({$columns}) VALUES({$values})"
+        );
+
+        $query->execute($data);
+
+        return $this->pdo->lastInsertId();
     }
+
 }
