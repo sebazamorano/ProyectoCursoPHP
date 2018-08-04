@@ -8,7 +8,7 @@
     <title>Usuarios</title>
 </head>
 <body>
-
+<a href="/crearUsuario">Crear Usuario</a>
 <table border>
     <tr>
         <th>ID</th>
@@ -20,16 +20,19 @@
         <td><?= $usuario->id ?></td>
         <td><?= $usuario->nombre ?></td>
         <td><?= $usuario->email ?></td>
+        <td>
+            <a href="/actualizarUsuario?id=<?= $usuario->id ?>">Editar</a>
+        </td>
+        <td>
+            <form action="/eliminarUsuario" method="post">
+                <input type="hidden" name="id" value="<?= $usuario->id ?>">
+                <button>Eliminar</button>
+            </form>
+        </td>
     </tr>
     <?php endforeach; ?>
 </table>
 
 <hr>
-<form action="/usuarios" method="post">
-    <input name="nombre" type="text" placeholder="Nombre">
-    <input name="email" type="email" placeholder="Email">
-    <input name="password" type="password" placeholder="Password">
-    <button>Guardar</button>
-</form>
 </body>
 </html>

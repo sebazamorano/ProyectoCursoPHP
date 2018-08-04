@@ -1,7 +1,6 @@
 <?php
 namespace Blog\Controller;
 
-use PDO;
 
 class Controller
 {
@@ -9,7 +8,7 @@ class Controller
     {
         extract($data);
 
-        return require "views/{$name}.view.php";
+        return require "../views/{$name}.view.php";
     }
 
     public function connection()

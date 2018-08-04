@@ -1,5 +1,5 @@
 <?php
-namespace Blog;
+namespace Core;
 
 use Exception;
 
@@ -18,7 +18,7 @@ class Route
     {
         $route = new static();
 
-        include "routes.php";
+        include "../routes.php";
 
         return $route;
     }
