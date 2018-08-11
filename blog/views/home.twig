@@ -10,17 +10,17 @@
 <body>
     <h1>Estas son tus tareas</h1>
 
-    <p>Hola tu nombre es : <?= $nombre ?></p>
+    <p>Hola tu nombre es : {{ nombre }}</p>
 
-    <?php if (count($tareas) > 0): ?>
+    {% if  tareas|length > 0 %}
         <p>Tus Tareas Son :</p>
         <ul>
-            <?php foreach($tareas as $tarea): ?>
-                <li><?= $tarea ?></li>
-            <?php endforeach; ?>
+            {% for tarea in tareas %}
+            <li>{{ tarea }}</li>
+            {% endfor %}
         </ul>
-    <?php else: ?>
+    {% else  %}
         <p>No hay Tareas</p>
-    <?php endif; ?>
+    {% endif %}
 </body>
 </html>

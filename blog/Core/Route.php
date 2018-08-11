@@ -2,6 +2,11 @@
 namespace Core;
 
 use Exception;
+use Phroute\Phroute\Dispatcher;
+use Phroute\Phroute\Exception\BadRouteException;
+use Phroute\Phroute\Exception\HttpMethodNotAllowedException;
+use Phroute\Phroute\Exception\HttpRouteNotFoundException;
+use Phroute\Phroute\RouteCollector;
 
 class Route
 {
@@ -9,6 +14,7 @@ class Route
         'GET' => [],
         'POST' => [],
     ];
+    protected $collection;
 
     /*
      * Carga las rutas que están en el aruhivo
@@ -17,6 +23,7 @@ class Route
     public static function load()
     {
         $route = new static();
+        $route->collection = new RouteCollector();
 
         include "../routes.php";
 
@@ -28,7 +35,7 @@ class Route
      */
     public function get($route, $controller)
     {
-        $this->routes['GET'][$route] = $controller;
+        $this->collection->get($route, $this->callAction($controller));
     }
 
     /*
@@ -37,7 +44,7 @@ class Route
      */
     public function post($route, $controller)
     {
-        $this->routes['POST'][$route] = $controller;
+        $this->collection->post($route, $this->callAction($controller));
     }
 
     /*
@@ -47,31 +54,42 @@ class Route
     /**
      * @param $uri
      * @param $method
-     * @throws Exception
+     * @return mixed|null
      */
     public function execute($uri, $method)
     {
-        if (array_key_exists($uri, $this->routes[$method])) {
-            $action = explode('@', $this->routes[$method][$uri]);
-            $this->callAction($action[0], $action[1]);
-        } else {
-            throw new Exception('No Existe la ruta', 404);
+        try {
+            $dispatcher = new Dispatcher($this->collection->getData());
+            $response = $dispatcher->dispatch($method, $uri);
+            return $response;
+        } catch (HttpMethodNotAllowedException $ex) {
+            echo 'No existe la acción';
+        } catch (HttpRouteNotFoundException $ex) {
+            echo 'No existe la ruta';
         }
+    }
+
+    protected function addingFilterAuth()
+    {
+        $this->collection->filter('auth', function () {
+            if (isset($_SESSION['user'])) {
+                header('Location: /login');
+                return false;
+            }
+        });
     }
 
     /*
      * Creacion del objeto Controller
      */
-    protected function callAction($controller, $action)
+    protected function callAction($controller)
     {
-        //Escribo el nombre de espacio
-        $controller =  "Blog\\Controller\\{$controller}";
-        //instancio el objeto controller
-        $controller = new $controller;
-        if (method_exists($controller, $action)) {
-            return $controller->$action();
-        }
-        throw new Exception('No Existe la acción', 404);
+        $controller = explode('@', $controller);
+
+        return [
+            "Blog\\Controller\\{$controller[0]}",
+            $controller[1]
+        ];
     }
 
 }

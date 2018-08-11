@@ -53,4 +53,9 @@ class Usuario extends Model
     {
         $this->query->removeResource($this->table, $id);
     }
+
+    public function getUsuarioByEmail($email)
+    {
+        return $this->query->selectAllBy($this->table, 'email', $email)[0];
+    }
 }

@@ -18,7 +18,11 @@ class UsuarioController extends Controller
 
     public function create()
     {
-        $this->view('usuario/crearUsuario');
+        if (isset($_SESSION['user'])) {
+            $this->view('usuario/crearUsuario');
+        } else {
+            header('Location: /login');
+        }
     }
 
     public function store ()

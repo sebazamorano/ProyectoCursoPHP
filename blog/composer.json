@@ -11,7 +11,8 @@
     ],
     "require": {
         "twig/twig": "^2.0",
-        "vlucas/valitron": "^1.4"
+        "vlucas/valitron": "^1.4",
+        "phroute/phroute": "^2.1"
     },
     "autoload": {
         "psr-4": {

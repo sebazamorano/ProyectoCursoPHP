@@ -13,6 +13,15 @@ class QueryBuilder
         $this->pdo = $pdo;
     }
 
+    public function first($table)
+    {
+        $query = $this->pdo->prepare(
+            "SELECT * FROM {$table} LIMIT 1"
+        );
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_CLASS);
+    }
+
     public function getAll($table)
     {
         $query = $this->pdo->prepare(
