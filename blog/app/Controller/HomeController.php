@@ -17,6 +17,6 @@ class HomeController extends Controller
         ];
         $nombre = 'Sebastian Zamorano';
 
-        $this->view('home', compact('tareas', 'nombre'));
+        $this->view('content', compact('tareas', 'nombre'));
     }
 }

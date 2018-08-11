@@ -15,22 +15,21 @@
         <th>Nombre</th>
         <th>Email</th>
     </tr>
-    <?php foreach($usuarios as $usuario): ?>
+    {% for usuario in usuarios %}
     <tr>
-        <td><?= $usuario->id ?></td>
-        <td><?= $usuario->nombre ?></td>
-        <td><?= $usuario->email ?></td>
+        <td>{{ usuario.id }}</td>
+        <td>{{ usuario.nombre }}</td>
+        <td>{{ usuario.email }}</td>
         <td>
-            <a href="/actualizarUsuario?id=<?= $usuario->id ?>">Editar</a>
+            <a href="/actualizarUsuario/{{ usuario.id }}">Editar</a>
         </td>
         <td>
-            <form action="/eliminarUsuario" method="post">
-                <input type="hidden" name="id" value="<?= $usuario->id ?>">
+            <form action="/eliminarUsuario/{{usuario.id}}" method="post">
                 <button>Eliminar</button>
             </form>
         </td>
     </tr>
-    <?php endforeach; ?>
+    {% endfor %}
 </table>
 
 <hr>

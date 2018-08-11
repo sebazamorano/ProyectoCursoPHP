@@ -8,17 +8,16 @@
     <title>Document</title>
 </head>
 <body>
-<?php if (isset($errors)): ?>
+{%  if errors %}
     <ul>
-        <?php foreach($errors as $error): ?>
+        {% for error in errors %}
             <li><?= implode(', ', $error) ?></li>
-        <?php endforeach; ?>
+        {%  endfor %}
     </ul>
-<?php endif; ?>
-<form action="/update" method="post">
-    <input name="nombre" value="<?= $usuario->nombre ?>" type="text" placeholder="Nombre" >
-    <input name="email" value="<?= $usuario->email ?>" type="email" placeholder="Email" >
-    <input name="id" value="<?= $usuario->id ?>" type="hidden">
+{% endif %}
+<form action="/update/{{ usuario.id }}" method="post">
+    <input name="nombre" value="{{  usuario.nombre }}" type="text" placeholder="Nombre" >
+    <input name="email" value="{{ usuario.email }}" type="email" placeholder="Email" >
     <button>Actualizar</button>
 </form>
 </body>

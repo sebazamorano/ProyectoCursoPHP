@@ -10,7 +10,6 @@ class UsuarioController extends Controller
     public function usuarios ()
     {
         $usuario = new Usuario();
-
         $usuarios = $usuario->all();
 
         $this->view('usuario/usuarios', compact('usuarios'));
@@ -41,35 +40,31 @@ class UsuarioController extends Controller
         }
     }
 
-    public function formActualizar()
+    public function formActualizar($id)
     {
-        if (isset($_GET['id'])) {
-            $usuario = new Usuario();
-            $usuario = $usuario->allBy('id', $_GET['id']);
-            $usuario = array_pop($usuario);
+        $usuario = new Usuario();
+        $usuario = $usuario->allBy('id', $id);
+        $usuario = array_pop($usuario);
 
-            return $this->view('usuario/actualizarUsuarios', compact('usuario'));
-        }
+        return $this->view('usuario/actualizarUsuarios', compact('usuario'));
     }
 
-    public function update()
+    public function update($id)
     {
         $usuario = new Usuario();
         $usuario->nombre = $_POST['nombre'];
         $usuario->email = $_POST['email'];
-        $usuario->id = $_POST['id'];
+        $usuario->id = $id;
         $usuario->update();
 
         return header('Location: /usuarios');
 
     }
 
-    public function eliminar()
+    public function eliminar($id)
     {
-        if (isset($_POST['id'])) {
-            $usuario = new Usuario();
-            $usuario->delete($_POST['id']);
-        }
+        $usuario = new Usuario();
+        $usuario->delete($id);
 
         return header('Location: /usuarios');
     }
